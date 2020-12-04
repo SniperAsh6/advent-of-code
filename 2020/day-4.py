@@ -71,26 +71,14 @@ def input_to_passport_data(raw_input):
         passport += line.replace("\n", "").split(" ")
     return passports_data
 
-def passport_processing(passports_input):
-    valid_count = 0
-    for passport_input in passports_input:
-        valid_fields = 0
-        for field in passport_input:
-            field_name = field.split(":")[0]
-            if field_name in mandatory_fields:
-                valid_fields += 1
-        if valid_fields == 7:
-            valid_count += 1
-    print(valid_count)
-
-def passport_processing2(passports_input):
+def passport_processing(passports_input, validate_fields=False):
     valid_count = 0
     for passport_input in passports_input:
         valid_fields = 0
         for field in passport_input:
             field_name, field_value = field.split(":")
-            if field_name in mandatory_fields and is_field_valid(field_name, field_value):
-                valid_fields += 1
+            if field_name in mandatory_fields and (not validate_fields or (validate_fields and is_field_valid(field_name, field_value))):
+                    valid_fields += 1
         if valid_fields == 7:
             valid_count += 1
     print(valid_count)
@@ -107,9 +95,7 @@ def is_field_valid(field_name, field_value):
                 return True
         elif validation_rule["type"] == "boundary":
             regex_match = re.match(validation_rule["regex"], field_value)
-            if regex_match is not None:
-                matched_value = int(regex_match.groups()[0])
-                if validation_rule["min"] <= matched_value <= validation_rule["max"]:
+            if regex_match is not None and validation_rule["min"] <= int(regex_match.groups()[0]) <= validation_rule["max"]:
                     return True
     return False
 
@@ -120,4 +106,4 @@ with open(r"2020/Input/day-4-puzzle.txt") as input_data_file:
 
 passport_data = input_to_passport_data(input_data)
 passport_processing(passport_data)
-passport_processing2(passport_data)
+passport_processing(passport_data, True)

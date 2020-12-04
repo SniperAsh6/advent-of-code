@@ -63,12 +63,14 @@ mandatory_fields = {
 def input_to_passport_data(raw_input):
     passports_data = []
     passport = []
-    for line in raw_input:
+    for i, line in enumerate(raw_input):
         if line == "\n":
             passports_data.append(passport)
             passport = []
             continue
         passport += line.replace("\n", "").split(" ")
+        if i == len(raw_input) - 1:
+            passports_data.append(passport)
     return passports_data
 
 def passport_processing(passports_input, validate_fields=False):

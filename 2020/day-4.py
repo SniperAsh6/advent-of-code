@@ -65,7 +65,8 @@ def input_to_passport_data(raw_input):
     passport = []
     for i, line in enumerate(raw_input):
         if line == "\n":
-            passports_data.append(passport)
+            if len(passport) > 0:
+                passports_data.append(passport)
             passport = []
             continue
         passport += line.replace("\n", "").split(" ")

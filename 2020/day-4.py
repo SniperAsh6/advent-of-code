@@ -78,7 +78,9 @@ def passport_processing(passports_input, validate_fields=False):
         for field in passport_input:
             field_name, field_value = field.split(":")
             if field_name in mandatory_fields and (not validate_fields or (validate_fields and is_field_valid(field_name, field_value))):
-                    valid_fields += 1
+                valid_fields += 1
+            elif field_name != "cid":
+                break
         if valid_fields == 7:
             valid_count += 1
     print(valid_count)

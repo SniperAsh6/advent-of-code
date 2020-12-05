@@ -28,4 +28,24 @@ def binary_boarding(boarding_passes):
             print(taken_seat + 1)
             break
 
+# VampyrByte's solution
+def binary_boarding2(boarding_passes):
+    max_seat_id = 0
+    taken_seats = []
+    for boarding_pass in boarding_passes:
+        row = boarding_pass[:7].replace("F", "0").replace("B", "1")
+        column = boarding_pass[7:].replace("L", "0").replace("R", "1")
+        seat_id = int(row, 2) * 8 + int(column, 2)
+        taken_seats.append(seat_id)
+        if seat_id > max_seat_id:
+            max_seat_id = seat_id
+    print(max_seat_id)
+    taken_seats.sort()
+    for taken_seat in taken_seats:
+        if taken_seat + 1 not in taken_seats and taken_seat + 2 in taken_seats:
+            print(taken_seat + 1)
+            break
+
 binary_boarding(puzzle_input)
+
+binary_boarding2(puzzle_input)

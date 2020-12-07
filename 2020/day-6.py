@@ -14,14 +14,19 @@ def input_to_group_answers(raw_input):
 
 def custom_customs(answers_input):
     yes_question_count = 0
+    all_yes_question_count = 0
     for group in answers_input:
-        group_questions = []
+        group_questions = {}
         for individual in group:
             for answer in individual:
                 if answer not in group_questions:
-                    group_questions.append(answer)
+                    group_questions[answer] = 1
+                else:
+                    group_questions[answer] += 1
         yes_question_count += len(group_questions)
+        all_yes_question_count += len(list(filter(lambda x: group_questions[x] == len(group), group_questions)))
     print(yes_question_count)
+    print(all_yes_question_count)
 
 with open(r"2020/Input/day-6-puzzle.txt") as input_data_file:
     input_data = input_data_file.readlines()

@@ -11,5 +11,16 @@ def sonar_sweep(input):
         last = x
     return count
 
+def group_values(input, group_size=3):
+    values = [0 for i in range(len(input)-2)]
+    for i in range(len(input)-2):
+        values[i] = sum(input[i:i+group_size])
+    return values
+
 print(sonar_sweep(example_input))
 print(sonar_sweep(puzzle_input))
+
+example_values = group_values(example_input)
+print(sonar_sweep(example_values))
+puzzle_values = group_values(puzzle_input)
+print(sonar_sweep(puzzle_values))

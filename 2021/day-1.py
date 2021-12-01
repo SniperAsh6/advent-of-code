@@ -12,7 +12,7 @@ def sonar_sweep(input):
     return count
 
 def group_values(input, group_size=3):
-    values = [0 for i in range(len(input)-2)]
+    values = [0 for i in range(len(input)-(group_size-1))]
     for i in range(len(input)-2):
         values[i] = sum(input[i:i+group_size])
     return values
